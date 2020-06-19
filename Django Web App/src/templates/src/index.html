@@ -1,0 +1,60 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Home</title>
+</head>
+
+<body>
+    <nav class="navbar bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Welcome</a>
+        <a href="{% url 'src:agents' %}" class="btn btn-primary" text-align='center'>View Agents</a>
+    </nav>
+    <div class="container-fluid">
+        <div align='center'>
+            <h2>Enter Issue details</h2>
+            <div class="container d-flex h-100 row justify-content-center col-20">
+                <form align='center' method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input class="btn btn-success my-3" type="submit" value="View Agents">
+                </form>
+            </div>
+        </div>
+        {% if agents %}
+            <div id="issue" align="center" class="my-2">
+                <h5>
+                    Mode selected : {{ mode }}<br>
+                    Role(s) :
+                    {% for r in roles %}
+                        {{ r }},
+                    {% endfor %}
+                </h5>
+            </div>
+            <br>
+            <div id="agents" align="center" class="my-2">
+                <h3>ID of agent(s) for the issue :</h3>
+                {% if available %}
+                <ul>
+                    {% for a in agents %}
+                        <li>
+                            {{ a }}
+                        </li>                      
+                        {% empty %}
+                        <h4>No agents available</h4>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <h4>{{ agents }}</h4>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
