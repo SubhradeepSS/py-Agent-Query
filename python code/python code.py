@@ -35,7 +35,7 @@ try:
 
     view_agents = None
     while True:
-        view_agents = input('\nDo you want to create view existing agents[y for yes/n for no]? ')
+        view_agents = input('\nDo you want to view existing agents[y for yes/n for no]? ')
         print()
         if view_agents == 'y' or view_agents == 'n':
             break
@@ -80,7 +80,7 @@ def agents_input():
         id = None
         while True:
             try:
-                id = int(input('Enter the ID(Integer) of the agent you want to create: '))
+                id = int(input("Enter the ID(Integer) of the agent you want to create(ID can't be changed): "))
                 break
             except:
                 print_Error_Msg()
@@ -200,8 +200,85 @@ def issues_input():
         print()
 
 
+# FUNCTION TO EDIT THE AGENT WITH ID = id
+def edit_specific_agent(id):
+    for agent in Agent_List:
+        if agent.id == id:
+            # id = None
+            # while True:
+            #     try:
+            #         id = int(input('Enter the new ID(Integer) of the agent you want to create: '))
+            #         break
+            #     except:
+            #         print_Error_Msg()
+
+            # while id in ID_list:
+            #     while True:
+            #         try:
+            #             id = int(input('This ID is already present.Please enter another ID: '))
+            #             break
+            #         except:
+            #             print_Error_Msg()
+
+            s_input = None
+            while True:
+                s_input = input('Enter 1 if agent is available else 0: ')
+                if s_input == '1' or s_input == '0':
+                    break
+                else:
+                    print_Error_Msg()
+
+            status, available_since = False, None
+            if s_input == '1':
+                status = True
+                while True:
+                    try:
+                        available_since = float(input('Enter the last availability time(in Decimal) of the agent: '))
+                        break
+                    except:
+                        print_Error_Msg()
+            
+
+            roles = list(input('Enter roles of the agent(separated by comma): ').split(','))
+            
+            agent.id = id
+            agent.status = status
+            agent.available_since = available_since
+            agent.roles = roles
+
+            return True
+    
+    return False
+
+# FUNCTION INVOKED IF USER WANTS TO EDIT AGENT(S) INFO
+def edit_agent_func():
+    n_edits = None
+    
+    while True:
+        try:
+            n_edits = int(input('\nEnter the number(Integer) of agents you want to edit: '))
+            print()
+            break
+        except:
+            print_Error_Msg()
+    
+    id = None
+    for _ in range(n_edits):
+        while True:
+            try:
+                id = int(input('Enter the ID(Integer) of the agent you want to edit: '))
+                if edit_specific_agent(id):
+                    break
+                else:
+                    print("AGENT WITH ENTERED ID DOESN'T EXIST!!!")
+            except:
+                print_Error_Msg()
+        print()
+
 # MAIN FUNCTION FOR THE PROGRAM
 def main():
+
+    # ASKING USER WHETHER TO CREATE NEW AGENT
     new_agent = None
     while True:
         new_agent = input('\nDo you want to create new agents[y for yes/n for no]? ')
@@ -217,6 +294,7 @@ def main():
         if not Agent_List:
             ip = None
             while True:
+                # NO AGENTS ARE CREATED SO FIRST CREATE AGENTS AND THEN CHECK FOR AGENTS' AVAILABILITY FOR ISSUE
                 ip = input('\nDo you really want to quit creating agents, as currently database does not contain any agent and issue query is not possible for an empty database of agents[y for yes/n for no]? ')
                 print()
                 if ip == 'y' or ip == 'n':
@@ -227,11 +305,9 @@ def main():
             if ip == 'n':
                 agents_input()
 
-    if Agent_List:
-        pickle_file = open("agents.pickle","wb")
-        pickle.dump(Agent_List,pickle_file)
-        pickle_file.close()
 
+    if Agent_List:
+        # ASKING USER WHETHER TO CHECK AVAILABLE AGENTS FOR ISSUE
         while True:
             new_issue = input('\nDo you want to check available agents for issues[y for yes/n for no]? ')
             if new_issue == 'y' or new_issue == 'n':
@@ -243,4 +319,25 @@ def main():
         if new_issue == 'y':
             issues_input()
 
+
+        # IF USER WANTS TO EDIT ANY AGENTS' INFO
+        edit_agent = None
+        while True:
+            edit_agent = input('\nDo you want to create edit any agent info[y for yes/n for no]? ')
+            print()
+            if edit_agent == 'y' or edit_agent == 'n':
+                break
+            else:
+                print_Error_Msg()
+        
+        edit_no, edit_id = None, None
+        if edit_agent == 'y':
+            edit_agent_func()
+
+
+        # SAVING AGENT LIST AFTER EDITING
+        pickle_file = open("agents.pickle","wb")
+        pickle.dump(Agent_List,pickle_file)
+        pickle_file.close()
+        
 main()
