@@ -1,7 +1,6 @@
 from random import randint
 from operator import attrgetter
 import pickle
-import sys
 
 class Agent:
     def __init__(self, roles, id, status=False, available_since=None):
@@ -20,49 +19,109 @@ class Issue:
     def __init__(self, roles):
         self.roles = roles
 
+
+def print_Error_Msg():
+    print('PLEASE ENTER INPUT OF CORRECT TYPE AS STATED!!!')
+
+
 Agent_List = None
 ID_list = []
 
+# LOAD EXISTING AGENT DATA (IF AVAILABLE)
 try:
     pickle_file = open("agents.pickle","rb")
     Agent_List = pickle.load(pickle_file)
     pickle_file.close()
-    print('\nFollowing Agents are available:-\n')
-    for a in Agent_List:
-        print(f"ID: {a.id}\nStatus: {a.status}\nRoles: {a.roles}\nAvailable since: {a.available_since}\n")
-        ID_list.append(a.id)
-    print()
+
+    view_agents = None
+    while True:
+        view_agents = input('\nDo you want to create view existing agents[y for yes/n for no]? ')
+        print()
+        if view_agents == 'y' or view_agents == 'n':
+            break
+        else:
+            print_Error_Msg()
+
+    if view_agents == 'y':
+        print('\nFollowing Agents are available:-\n')
+
+        for a in Agent_List:
+            detail = f"ID: {a.id}\nStatus: "
+            
+            if a.status:
+                detail += 'Available'
+            else:
+                detail += 'Not Available'
+
+            print(detail + f"\nRoles: {a.roles}\nAvailable since: {a.available_since}\n")
+
+            ID_list.append(a.id)
+        print()
+
 except:
     print("\nNo Agents present in Database.Please create agents first to check available agents for issues\n")
     Agent_List = []
 
 
+# FUNCTION FOR CREATING NEW AGENT
 def agents_input():
-    n = int(input('Enter the number of agents to create: '))
+    n = None
+    while True:
+        try:
+            n = int(input('Enter the number(Integer) of agents to create: '))
+            break
+        except:
+            print_Error_Msg()
     print()
 
-    print('Enter the details of the agents as stated\n')
+    print('\nEnter the details of the agents as stated\n')
 
     for i in range(n):
-        id = int(input('Enter the ID of the agent you want to create: '))
+        id = None
+        while True:
+            try:
+                id = int(input('Enter the ID(Integer) of the agent you want to create: '))
+                break
+            except:
+                print_Error_Msg()
+
         while id in ID_list:
-            id = int(input('This ID is already present.Please enter another ID: '))
+            while True:
+                try:
+                    id = int(input('This ID is already present.Please enter another ID: '))
+                    break
+                except:
+                    print_Error_Msg()
+
         ID_list.append(id)
 
-        s_input = input('Enter 1 if agent is available else 0: ')
+        s_input = None
+        while True:
+            s_input = input('Enter 1 if agent is available else 0: ')
+            if s_input == '1' or s_input == '0':
+                break
+            else:
+                print_Error_Msg()
 
         status, available_since = False, None
         if s_input == '1':
             status = True
-            available_since = float(input('Enter the time since last availability(in Decimal): '))
+            while True:
+                try:
+                    available_since = float(input('Enter the last availability time(in Decimal) of the agent: '))
+                    break
+                except:
+                    print_Error_Msg()
         
-        roles = list(input('Enter roles of agent(separated by comma): ').split(','))
+
+        roles = list(input('Enter roles of the agent(separated by comma): ').split(','))
 
         Agent_List.append(Agent(roles=roles,id=id,status=status,available_since=available_since))
         
         print()
 
 
+# FUNCTION TO RETURN THE AGENT(S) FOR THE SPECIFIC ISSUES
 def func(roles, mode):
     agents = []
     for agent in Agent_List:
@@ -80,13 +139,13 @@ def func(roles, mode):
     if not agents:
         return None
 
-    if mode == 1:
+    if mode == 1:                                           # RETURNING ALL MATCHING ROLE(S) AGENTS
         return agents
     
     elif mode == 3:
-        return agents[randint(0,len(agents)-1)]
+        return agents[randint(0,len(agents)-1)]             # RETURNING A RANDOM AGENT OUT OF MATCHING ROLE(S) AGENTS
     
-    return min(agents, key=attrgetter('available_since'))
+    return min(agents, key=attrgetter('available_since'))   # RETURNING THE MATCHING ROLE(S) AGENT WITH LEAST BUSY TIME / MINIMUM "AVAILABLE SINCE TIME"
     # min_agent = agents[0]
     # for i in range(1,len(agents)):
     #     if agents[i].available_since < min_agent.available_since:
@@ -95,17 +154,35 @@ def func(roles, mode):
     # return min_agent
 
 
+# FUNCTION FOR TAKING ISSUES AS INPUT
 def issues_input():
-    no_issues = int(input('Enter the number of issue queries: '))
+    no_issues = None
+    while True:
+        try:
+            no_issues = int(input('Enter the number(Integer) of issue queries: '))
+            break
+        except:
+            print_Error_Msg()
     print()
 
-    print('Enter the details of the issues as stated\n')
+    print('\nEnter the details of the issues as stated\n')
 
     for i in range(no_issues):
         print(f"Enter details of Issue {i+1}")
         
         roles = list(input('Enter the roles(comma separated) with which the issue is dealing: ').split(','))
-        mode = int(input('Enter the mode of issue distribution(1 for available, 2 for least_busy, 3 for random): '))
+
+        mode = None
+        while True:
+            try:
+                mode = int(input('Enter the mode of issue distribution(1 for available, 2 for least_busy, 3 for random): '))
+                if mode == 1 or mode == 2 or mode == 3:
+                    break
+                else:
+                    print_Error_Msg()
+            except:
+                print_Error_Msg()
+        
         
         print('Agent(s) for the issue:', end=' ')
 
@@ -123,15 +200,30 @@ def issues_input():
         print()
 
 
+# MAIN FUNCTION FOR THE PROGRAM
 def main():
-    new_agent = input('Do you want to create new agents[y for yes/n for no]? ')
-    print()
+    new_agent = None
+    while True:
+        new_agent = input('\nDo you want to create new agents[y for yes/n for no]? ')
+        print()
+        if new_agent == 'y' or new_agent == 'n':
+            break
+        else:
+            print_Error_Msg()
+
     if new_agent == 'y':
         agents_input()
     else:
         if not Agent_List:
-            ip = input('\nDo you really want to quit creating agents, as currently database does not contain any agent and issue query is not possible for an empty database of agents?[y for yes/n for no] ')
-            print()
+            ip = None
+            while True:
+                ip = input('\nDo you really want to quit creating agents, as currently database does not contain any agent and issue query is not possible for an empty database of agents[y for yes/n for no]? ')
+                print()
+                if ip == 'y' or ip == 'n':
+                    break
+                else:
+                    print_Error_Msg()
+
             if ip == 'n':
                 agents_input()
 
@@ -140,7 +232,13 @@ def main():
         pickle.dump(Agent_List,pickle_file)
         pickle_file.close()
 
-        new_issue = input('\nDo you want to check available agents for issues[y for yes/n for no]? ')
+        while True:
+            new_issue = input('\nDo you want to check available agents for issues[y for yes/n for no]? ')
+            if new_issue == 'y' or new_issue == 'n':
+                break
+            else:
+                print_Error_Msg()
+
         print()
         if new_issue == 'y':
             issues_input()
