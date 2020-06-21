@@ -15,10 +15,6 @@ class Agent:
     def __str__(self):
         return str(self.id)
 
-class Issue:
-    def __init__(self, roles):
-        self.roles = roles
-
 
 def print_Error_Msg():
     print('PLEASE ENTER INPUT OF CORRECT TYPE AS STATED!!!')
@@ -76,11 +72,11 @@ def agents_input():
 
     print('\nEnter the details of the agents as stated\n')
 
-    for i in range(n):
+    for _ in range(n):
         id = None
         while True:
             try:
-                id = int(input("Enter the ID(Integer) of the agent you want to create(ID can't be changed): "))
+                id = int(input("Enter the ID(Integer) of the agent you want to create(NOTE: ID can't be changed): "))
                 break
             except:
                 print_Error_Msg()
@@ -204,22 +200,6 @@ def issues_input():
 def edit_specific_agent(id):
     for agent in Agent_List:
         if agent.id == id:
-            # id = None
-            # while True:
-            #     try:
-            #         id = int(input('Enter the new ID(Integer) of the agent you want to create: '))
-            #         break
-            #     except:
-            #         print_Error_Msg()
-
-            # while id in ID_list:
-            #     while True:
-            #         try:
-            #             id = int(input('This ID is already present.Please enter another ID: '))
-            #             break
-            #         except:
-            #             print_Error_Msg()
-
             s_input = None
             while True:
                 s_input = input('Enter 1 if agent is available else 0: ')
@@ -241,10 +221,10 @@ def edit_specific_agent(id):
 
             roles = list(input('Enter roles of the agent(separated by comma): ').split(','))
             
-            agent.id = id
             agent.status = status
             agent.available_since = available_since
             agent.roles = roles
+            print('EDITTING SUCCESSFULL!!')
 
             return True
     
@@ -323,19 +303,18 @@ def main():
         # IF USER WANTS TO EDIT ANY AGENTS' INFO
         edit_agent = None
         while True:
-            edit_agent = input('\nDo you want to create edit any agent info[y for yes/n for no]? ')
+            edit_agent = input('\nDo you want to edit any agent info[y for yes/n for no]? ')
             print()
             if edit_agent == 'y' or edit_agent == 'n':
                 break
             else:
                 print_Error_Msg()
-        
-        edit_no, edit_id = None, None
+
         if edit_agent == 'y':
             edit_agent_func()
 
 
-        # SAVING AGENT LIST AFTER EDITING
+        # SAVING FINAL AGENT LIST
         pickle_file = open("agents.pickle","wb")
         pickle.dump(Agent_List,pickle_file)
         pickle_file.close()
