@@ -9,13 +9,7 @@ When an issue comes in we need to present the issue to 1 or many agents based on
 
 Implement a function that takes an input the list of agents with their data, agent selection mode and returns a list of agents the issue should be presented to.  
 
-## [Python Logic](https://github.com/SubhradeepSS/Task/tree/master/python%20code)
-* Implemented the python code for a CLI based interaction for the problem
+## Description
+* Implemented python code for a CLI based interaction for the problem
 * Used **pickle** to simulate as a simple database for storing Agents and their respective details
-
-## [Django Web App](https://github.com/SubhradeepSS/Task/tree/master/Django%20Web%20App)
-* Created a simple Django Web App to render a web UI for the problem
-* Database used for storing Agents info - **sqlite3**
-* For viewing the Web App - <br>
-Navigate to the [Web App directory](https://github.com/SubhradeepSS/Task/tree/master/Django%20Web%20App) and type **python manage.py runserver** in the terminal, which will start the web app in the local server **127.0.0.1:8000/**.
-Open the server and the home page of the web app will be started.
+* To start the program, run the **main.py** script.
