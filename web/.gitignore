@@ -1,7 +1,11 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+Django Web App/project/__pycache__/
+Django Web App/src/__pycache__/
+Django Web App/src/migrations/__pycache__/
+.vscode/
 
 # C extensions
 *.so
