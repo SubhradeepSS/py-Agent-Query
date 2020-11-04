@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    <nav class="navbar bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">{% block title_1 %}{% endblock title_1 %}</a>
+        <a href={% block url %}{% endblock url %} class="btn btn-light" text-align='center'>{% block title_2 %}{% endblock title_2 %}</a>
+    </nav>
+
+    {% block body %}{% endblock body %}
+</body>
+</html>

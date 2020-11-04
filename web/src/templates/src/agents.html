@@ -1,20 +1,13 @@
+{% extends 'src/base.html' %}
+
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Home</title>
-</head>
+{% block title %}Agents{% endblock title %}
+{% block title_1 %}Agents{% endblock title_1 %}
+{% block title_2 %}Home{% endblock title_2 %}
+{% block url %}{% url 'src:index' %}{% endblock url %}
 
-<body>
-    <nav class="navbar bg-dark navbar-dark">
-        <a class="navbar-brand" href="#">Agents</a>
-        <a href="{% url 'src:index' %}" class="btn btn-light" text-align='center'>Home</a>
-    </nav>
+{% block body %}
     <div class="container-fluid"></div>
         <div align='center'>
             <h2>Create new Agent</h2>
@@ -46,21 +39,19 @@
                         <p class="card-text">
                             Role(s) :
                             {% for r in agent.roles.all %}
-                                {{r}},
+                                {{ r }},
                             {% endfor %}
                             <br>
-                            Available Since : {{agent.available_since}}
+                            Available Since : {{ agent.available_since }}
                         </p>
                         <a href="{% url 'src:edit_agent' agent.id %}" class="card-link btn btn-info">Edit</a>
                     </div>
                 </div>
 
                 {% empty %}
-                <h3>No exams</h3>
+                <h3>No agents</h3>
                 {% endfor %}
             </div>
         </div>
     </div>
-</body>
-
-</html>
+{% endblock body %}

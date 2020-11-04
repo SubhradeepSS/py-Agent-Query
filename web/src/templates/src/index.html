@@ -1,20 +1,13 @@
+{% extends 'src/base.html' %}
+
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Home</title>
-</head>
+{% block title %}Home{% endblock title %}
+{% block title_1 %}Welcome{% endblock title_1 %}
+{% block title_2 %}View agents{% endblock title_2 %}
+{% block url %}{% url 'src:agents' %}{% endblock url %}
 
-<body>
-    <nav class="navbar bg-dark navbar-dark">
-        <a class="navbar-brand" href="#">Welcome</a>
-        <a href="{% url 'src:agents' %}" class="btn btn-primary" text-align='center'>View Agents</a>
-    </nav>
+{% block body %}
     <div class="container-fluid">
         <div align='center'>
             <h2>Enter Issue details</h2>
@@ -55,6 +48,4 @@
             </div>
         {% endif %}
     </div>
-</body>
-
-</html>
+{% endblock body %}
