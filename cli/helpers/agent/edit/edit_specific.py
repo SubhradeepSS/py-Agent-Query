@@ -1,7 +1,9 @@
 from ...error import print_Error_Msg
+from typing import List
+from ...agent.models import Agent
 
 # FUNCTION TO EDIT THE AGENT WITH ID = id
-def edit_specific_agent(id, Agent_List):
+def edit_specific_agent(id:int, Agent_List:List[Agent]) -> bool:
     for agent in Agent_List:
         if agent.id == id:
             s_input = None
@@ -12,7 +14,8 @@ def edit_specific_agent(id, Agent_List):
                 else:
                     print_Error_Msg()
 
-            status, available_since = False, None
+            status:bool = False
+            available_since:float = 0
             if s_input == '1':
                 status = True
                 while True:

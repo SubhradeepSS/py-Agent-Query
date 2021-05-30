@@ -6,8 +6,10 @@ from helpers.issue.input_func import issues_input
 from helpers.agent.input_func import agents_input
 from helpers.agent.edit.edit_main import edit_agent_func
 
-Agent_List = None
-ID_list = []
+from typing import List
+
+Agent_List:List[Agent] = []
+ID_list:List[int] = []
 
 # LOAD EXISTING AGENT DATA (IF AVAILABLE)
 try:
@@ -42,7 +44,6 @@ try:
 
 except:
     print("\nNo Agents present in Database.Please create agents first to check available agents for issues\n")
-    Agent_List = []
 
 
 

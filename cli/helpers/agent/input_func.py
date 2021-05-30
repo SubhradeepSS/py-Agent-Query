@@ -1,9 +1,12 @@
 from .models import Agent
 from ..error import print_Error_Msg
 
+from typing import List
+
+
 # FUNCTION FOR CREATING NEW AGENT
-def agents_input(Agent_List, ID_list):
-    n = None
+def agents_input(Agent_List:List[Agent], ID_list:List[int]) -> None:
+    n:int = 0
     while True:
         try:
             n = int(input('Enter the number(Integer) of agents to create: '))
@@ -15,7 +18,7 @@ def agents_input(Agent_List, ID_list):
     print('\nEnter the details of the agents as stated\n')
 
     for _ in range(n):
-        id = None
+        id:int = -1
         while True:
             try:
                 id = int(input("Enter the ID(Integer) of the agent you want to create(NOTE: ID can't be changed): "))
@@ -41,7 +44,8 @@ def agents_input(Agent_List, ID_list):
             else:
                 print_Error_Msg()
 
-        status, available_since = False, None
+        status:bool = False
+        available_since:float = 0
         if s_input == '1':
             status = True
             while True:

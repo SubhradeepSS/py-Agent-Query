@@ -1,9 +1,12 @@
 from ...error import print_Error_Msg
 from .edit_specific import edit_specific_agent
+from ...agent.models import Agent
+
+from typing import List
 
 # FUNCTION INVOKED IF USER WANTS TO EDIT AGENT(S) INFO
-def edit_agent_func(Agent_List):
-    n_edits = None
+def edit_agent_func(Agent_List: List[Agent]) -> None:
+    n_edits:int = 0
     
     while True:
         try:
@@ -13,7 +16,7 @@ def edit_agent_func(Agent_List):
         except:
             print_Error_Msg()
     
-    id = None
+    id:int = 0
     for _ in range(n_edits):
         while True:
             try:
