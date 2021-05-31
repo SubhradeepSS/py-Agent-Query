@@ -27,14 +27,19 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#installation">Installation</a>
+          <ul>
+            <li><a href="#cli-program">CLI Program</a></li>
+            <li><a href="#django-web-app">Django Web-App</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li>
       <a href="#usage">Usage</a>
       <ul>
-        <li><a href="#local">Local</a></li>
-        <li><a href="#deployment">Deployment</a></li>
+        <li><a href="#cli-program-1">CLI Program</a></li>
+        <li><a href="#django-web-app-1">Django Web-App</a></li>
       </ul>
     </li>
   </ol>
@@ -50,9 +55,9 @@ You are given the following data for agents
 * roles (a list of roles the user has, e.g. spanish speaker, sales, support etc.) 
 
 When an issue comes in we need to present the issue to 1 or many agents based on an agent selection mode. An agent selection mode can be all available, least busy or random. 
-* In "all available mode" the issue is presented to all agents so they pick the issue if they want. 
-* In "least busy" the issue is presented to the agent that has been available for the longest. 
-* In "random mode" we randomly pick an agent. An issue also has one or many roles (sales/support e.g.).
+* In ***all available mode*** the issue is presented to all agents so they pick the issue if they want. 
+* In ***least busy*** the issue is presented to the agent that has been available for the longest. 
+* In ***random mode*** we randomly pick an agent. An issue also has one or many roles (sales/support e.g.).
 
 Issues are presented to agents only with matching roles.
 
@@ -105,7 +110,11 @@ Following software needs to be setup in the system
 2. Activate python virtual environment (see here for [reference](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments))
 3. Inside the virtual environment, run
    ```sh
-   pip install -r requirements.txt
+    pip install -r requirements.txt
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py createsuperuser
+    # this will ask for username, email(optional) and password. Enter some credentials to be used later for django admin functionality.
    ```
 
 
@@ -118,12 +127,8 @@ The CLI Program will start once the ```main.py``` script is activated and will s
 ##### Django Web-App
 For running the project, navigate to the **web** directory and follow the given instructions:
 
-* Type the following in the command line(inside the virtual environment):
+* Type the following in the command line(inside the virtual environment) to run the web-app server:
     ```sh
-    python manage.py makemigrations
-    python manage.py migrate
-    python manage.py createsuperuser
-    # this will ask for username, email(optional) and password. Enter some credentials to be used later for django admin functionality.
     python manage.py runserver
   ```
 * Log on to [django admin site](http://127.0.0.1:8000/admin) using the superuser credentials and create some roles after opening the **Roles** section.
