@@ -1,0 +1,3 @@
+[submodule "go"]
+	path = goAgentQuery
+	url = https://github.com/SubhradeepSS/goAgentQuery
